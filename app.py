@@ -19,7 +19,6 @@ CLASS_NAMES = [
     'Tomato_healthy', 'Tomato_leaf blight', 'Tomato_leaf curl', 'Tomato_septoria leaf spot', 'Tomato_verticillium wilt'
 ]
 
-
 page = st.radio("", ["Home", "Classifier"])
 
 # --- MAIN CONTENT ---
@@ -51,24 +50,30 @@ elif page == "Classifier":
         uploaded_file = st.camera_input("Take a picture")
 
     if uploaded_file is not None:
-        img = Image.open(uploaded_file).convert('RGB')
-        st.image(img, caption='Uploaded Image', use_container_width=True)
+        try:
+            img = Image.open(uploaded_file).convert('RGB')
+            st.image(img, caption='Uploaded Image', use_container_width=True)
 
-        # Preprocess the image
-        img_resized = img.resize((224, 224))
-        img_array = image.img_to_array(img_resized)
-        img_array = np.expand_dims(img_array, axis=0) / 255.0  # Normalize
+            # Preprocess the image
+            img_resized = img.resize((224, 224))
+            img_array = image.img_to_array(img_resized)
+            img_array = np.expand_dims(img_array, axis=0) / 255.0  # Normalize
 
-        # Predict
-        prediction = model.predict(img_array)
-        predicted_index = np.argmax(prediction)
+            # Predict
+            prediction = model.predict(img_array)
+            predicted_index = np.argmax(prediction)
 
-        if predicted_index < len(CLASS_NAMES):
-            predicted_label = CLASS_NAMES[predicted_index]
-            confidence = prediction[0][predicted_index] * 100
+            if predicted_index < len(CLASS_NAMES):
+                predicted_label = CLASS_NAMES[predicted_index]
+                confidence = prediction[0][predicted_index] * 100
 
-            # Display prediction
-            st.success(f"**Prediction:** {predicted_label}")
-            st.info(f"**Confidence:** {confidence:.2f}%")
-        else:
-            st.error("Prediction index out of range. Check your model and class names.")
+                # Display prediction
+                st.success(f"**Prediction:** {predicted_label}")
+                st.info(f"**Confidence:** {confidence:.2f}%")
+            else:
+                st.error("Prediction index out of range. Check your model and class names.")
+
+        except Exception as e:
+            st.error(f"An error occurred while processing the image: {e}")
+    else:
+        st.warning("Please upload or capture an image to proceed.")
