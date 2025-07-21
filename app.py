@@ -19,7 +19,9 @@ CLASS_NAMES = [
     'Tomato_healthy', 'Tomato_leaf blight', 'Tomato_leaf curl', 'Tomato_septoria leaf spot', 'Tomato_verticillium wilt'
 ]
 
-page = st.radio("", ["Home", "Classifier"])
+# --- SIDEBAR NAVIGATION ---
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Classifier"])
 
 # --- MAIN CONTENT ---
 if page == "Home":
@@ -40,7 +42,6 @@ elif page == "Classifier":
     st.title("Crop Pest and Disease Classifier")
     st.write("Upload a crop image or take a photo to detect any pest or disease affecting it.")
 
-    # Option to upload or take a picture
     option = st.radio("Choose input method:", ('Upload Image', 'Take Photo'))
 
     uploaded_file = None
@@ -53,7 +54,7 @@ elif page == "Classifier":
         try:
             img = Image.open(uploaded_file).convert('RGB')
 
-            # Convert image to array for Streamlit display to avoid use_container_width issue
+            # Display image
             img_array_for_display = np.array(img)
             st.image(img_array_for_display, caption='Uploaded Image')
 
