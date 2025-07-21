@@ -19,27 +19,7 @@ CLASS_NAMES = [
     'Tomato_healthy', 'Tomato_leaf blight', 'Tomato_leaf curl', 'Tomato_septoria leaf spot', 'Tomato_verticillium wilt'
 ]
 
-# Inject custom CSS to adjust logo position
-st.markdown(
-    """
-    <style>
-    /* Reduce top padding in sidebar */
-    [data-testid="stSidebar"] {
-        padding-top: 1rem;
-    }
 
-    /* Optional: reduce margin around the image */
-    [data-testid="stSidebar"] img {
-        margin-top: -20px;  /* Adjust this value to move the logo further up */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# --- SIDEBAR LOGO AND NAVIGATION ---
-with st.sidebar:
-    st.image("logo.png", use_container_width=True)
     page = st.radio("", ["Home", "Classifier"])
 
 # --- MAIN CONTENT ---
