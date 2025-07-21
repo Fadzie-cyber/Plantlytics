@@ -20,7 +20,7 @@ CLASS_NAMES = [
 ]
 
 
-    page = st.radio("", ["Home", "Classifier"])
+page = st.radio("", ["Home", "Classifier"])
 
 # --- MAIN CONTENT ---
 if page == "Home":
